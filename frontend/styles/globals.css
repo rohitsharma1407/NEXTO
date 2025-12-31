@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* basic reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #__next { height: 100%; }
+
+/* Page background outside container */
+body {
+  background: #f0f0f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode for body */
+.dark body {
+  background: #1a1a1a;
+}
+
+/* Mobile-first container */
+.app-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* inner app (mobile app frame) */
+.app-container {
+  width: 100%;
+  max-width: 768px; /* tablet width */
+  background: #fff;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dark mode for app-container */
+.dark .app-container {
+  background: #000;
+  color: #fff;
+}
+
+/* On wider screens lock to tablet width centered */
+@media (min-width: 900px) {
+  .app-container {
+    width: 768px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .app-container {
+    max-width: 100vw;
+  }
+}
+
+/* Header / live bar / footer heights (compact, fixed to viewport but centered to container width) */
+.header {
+  height: 48px;
+  display:flex;
+  align-items:center;
+  padding:0 14px;
+  background:#fff;
+  position:fixed;
+  top:0;
+  left:50%;
+  transform: translateX(-50%);
+  width: 768px;
+  max-width: 100%;
+  z-index:1000;
+}
+
+.livebar {
+  height:32px;
+  background:#000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  padding:0 12px;
+  font-size:13px;
+  position:fixed;
+  top:56px;
+  left:50%;
+  transform: translateX(-50%);
+  width:100%;
+  max-width:768px;
+  z-index:999;
+}
+
+.main {
+  flex:1;
+  /* Increase top padding to fully clear header (56px) + livebar (32px) + stories (70px) */
+  padding-top: calc(56px + 32px + 70px + 16px);
+  padding-bottom: calc(35px + 16px);
+  overflow-y:auto;
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stories-sticky {
+  position: fixed;
+  /* Place exactly under header (56px) + livebar (32px) = 88px */
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 768px;
+  height: 70px;
+  z-index: 999;
+  background: #ffffff;
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #dbdbdb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode for stories section */
+.dark .stories-sticky {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-bottom-color: #dbdbdb;
+}
+
+/* Options bar at very bottom */
+.optionsbar {
+  height:35px;
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform: translateX(-50%);
+  width:100%;
+  max-width:768px;
+  background:#fff;
+  border-top:1px solid #dbdbdb;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  z-index:997;
+}
+
+/* Dark mode for optionsbar */
+.dark .optionsbar {
+  background: #000;
+  border-top-color: #333;
+}
+
+.dark .optionsbar a,
+.dark .optionsbar button {
+  color: #ffffff !important;
+}
+
+/* Footer - now part of normal flow */
+/* Styling removed - using Tailwind classes directly */
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Instagram-like components */
+.story-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid #dbdbdb;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.story-avatar:hover {
+  transform: scale(1.05);
+}
+
+.story-avatar.active {
+  border: 2px solid #0095f6;
+}
+
+.main {
+  flex:1;
+  /* Clear header + livebar + stories with a small buffer */
+  padding-top: calc(56px + 32px + 70px + 16px);
+  padding-bottom: calc(35px + 16px);
+  overflow-y:auto;
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.like-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.like-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.fade-in { animation: fadeIn 0.3s ease-in; }
+.slide-up { animation: slideUp 0.3s ease-in; }
+
+/* Media Query Helper */
+@media (max-width: 639px) {
+  .sm\:hidden { display: none !important; }
+}
+
+@media (max-width: 383px) {
+  .xs\:hidden { display: none !important; }
+  .xs\:block { display: block !important; }
+}
+
+.small-txt {
+  font-size: 13px;
+  color: #65676b;
+}
+
+.center {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Footer - flows with content */
+.footer { 
+  min-height: 91px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 1px solid #eee;
+  background: #fff;
+  position: relative;
+  width: 100%;
+  margin-bottom: 35px; /* Space for fixed OptionsBar */
+}
+
+/* News card */
+.news-card { border-radius:10px; border:1px solid #eee; padding:14px; background:#fff; margin:12px; box-shadow: 0 1px 0 rgba(0,0,0,0.03); }
+.news-title { font-weight:600; margin-bottom:8px; }
+.news-summary { color:#444; font-size:14px; white-space:pre-wrap; }
+
+/* small UI helpers */
+.btn { background:#000; color:#fff; padding:8px 12px; border-radius:8px; font-weight:600; border:none; cursor:pointer; }
+.select { padding:8px; border-radius:8px; border:1px solid #ddd; background:#fff; }
+.header-left { display:flex; align-items:center; gap:10px; }
+.header-right { display:flex; gap:12px; align-items:center; }
+.small-txt { font-size:13px; color:#666; }
+.center { display:flex; align-items:center; justify-content:center; }
+
+
+
+/* Additional styles can be added below */
+
+/* Hide horizontal scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Story progress animation */
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress 5s linear;
+}
+
+
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.25s ease-out;
+}

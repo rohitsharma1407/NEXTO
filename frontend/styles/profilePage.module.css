@@ -1,0 +1,44 @@
+/* Dedicated Profile Page Styles */
+
+.profilePageRoot {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fafafa 0%, #ffffff 40%);
+}
+
+.statsCard {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.04);
+}
+
+.stickyTabsWrap {
+  position: sticky;
+  top: 56px; /* Below header */
+  z-index: 30;
+  backdrop-filter: saturate(180%) blur(8px);
+}
+
+.gridWrap {
+  margin-top: 8px;
+}
+
+.sectionPad {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.maxWidth {
+  max-width: 48rem; /* 768px */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fadeIn {
+  animation: fadeIn 300ms ease-out both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

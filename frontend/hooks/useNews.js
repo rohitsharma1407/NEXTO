@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export default function useNews() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  async function fetchNews({ category="", location="", language="" } = {}) {
+  const fetchNews = useCallback(async ({ category="", location="", language="" } = {}) => {
     setLoading(true);
     try {
       const apiRoot = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -21,7 +21,7 @@ export default function useNews() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   return { news, loading, fetchNews, setNews };
 }

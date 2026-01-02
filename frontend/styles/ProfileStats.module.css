@@ -1,0 +1,83 @@
+.container {
+  @apply w-full bg-gradient-to-r from-purple-50 via-pink-50 to-blue-50 dark:from-purple-900/10 dark:via-pink-900/10 dark:to-blue-900/10;
+}
+
+.statsGrid {
+  @apply flex justify-around py-6 px-4 gap-2;
+}
+
+.statButton {
+  @apply group text-center cursor-pointer transition-all duration-300 rounded-2xl px-4 py-3 hover:bg-gradient-to-br hover:from-purple-100 hover:via-pink-100 hover:to-red-100 dark:hover:from-purple-900/30 dark:hover:via-pink-900/30 dark:hover:to-red-900/30 hover:scale-110 active:scale-95 hover:shadow-xl hover:shadow-purple-500/20;
+}
+
+.valueBg {
+  @apply relative;
+}
+
+.glow {
+  @apply absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity;
+}
+
+.postValue {
+  @apply text-2xl font-black bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 bg-clip-text text-transparent relative;
+}
+
+.postLabel {
+  @apply text-xs font-bold text-purple-600 dark:text-purple-400 mt-1 uppercase tracking-wider;
+}
+
+.followerValue {
+  @apply text-2xl font-black bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 bg-clip-text text-transparent relative;
+}
+
+.followerLabel {
+  @apply text-xs font-bold text-blue-600 dark:text-blue-400 mt-1 uppercase tracking-wider;
+}
+
+.followingValue {
+  @apply text-2xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent relative;
+}
+
+.followingLabel {
+  @apply text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-1 uppercase tracking-wider;
+}
+
+.likeValue {
+  @apply text-lg font-bold text-gray-900 dark:text-white;
+}
+
+.likeLabel {
+  @apply text-xs text-gray-600 dark:text-gray-400 mt-1;
+}
+
+.viewValue {
+  @apply text-lg font-bold text-gray-900 dark:text-white;
+}
+
+.viewLabel {
+  @apply text-xs text-gray-600 dark:text-gray-400 mt-1;
+}
+
+.underline {
+  @apply block mx-auto mt-1.5 h-1 w-8 origin-center scale-x-0 rounded-full transition-transform duration-300 ease-out group-hover:scale-x-100 shadow-lg;
+}
+
+.postLabel .underline {
+  @apply bg-gradient-to-r from-purple-600 via-pink-600 to-red-600;
+}
+
+.followerLabel .underline {
+  @apply bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600;
+}
+
+.followingLabel .underline {
+  @apply bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600;
+}
+
+.likeLabel .underline {
+  @apply h-[2px] w-6 bg-gray-900 dark:bg-white;
+}
+
+.viewLabel .underline {
+  @apply h-[2px] w-6 bg-gray-900 dark:bg-white;
+}

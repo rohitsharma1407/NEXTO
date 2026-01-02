@@ -4,40 +4,68 @@ import React, { useState } from "react";
 export default function CreatePostButton({ onCreatePost }) {
   const [showMenu, setShowMenu] = useState(false);
 
+  const styles = {
+    container: "relative",
+    fabButton: "fixed bottom-24 right-6 md:right-10 h-14 w-14 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-2xl hover:scale-105 transition transform flex items-center justify-center z-50",
+    active: "scale-110 rotate-45",
+    backdrop: "fixed inset-0 bg-black/40 backdrop-blur-sm z-40",
+    menuItems: "fixed bottom-44 right-6 md:right-10 flex flex-col gap-3 z-50",
+    menuItem: "flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/90 border border-white/10 shadow-lg text-white transition hover:-translate-y-[1px]",
+    iconBg: "h-9 w-9 rounded-xl flex items-center justify-center text-white shadow-md",
+    menuLabel: "text-sm font-semibold",
+  };
+
   const options = [
-    { id: "photo", label: "Upload Photo", icon: "fa-solid fa-image" },
-    { id: "video", label: "Upload Video", icon: "fa-solid fa-video" },
-    { id: "reel", label: "Create Reel", icon: "fa-solid fa-play" },
-    { id: "story", label: "Create Story", icon: "fa-solid fa-bolt" },
+    { id: "photo", label: "Upload Photo", icon: "fa-solid fa-image", color: "from-blue-500 to-blue-600" },
+    { id: "video", label: "Upload Video", icon: "fa-solid fa-video", color: "from-purple-500 to-purple-600" },
+    { id: "reel", label: "Create Reel", icon: "fa-solid fa-play", color: "from-pink-500 to-red-600" },
+    { id: "story", label: "Create Story", icon: "fa-solid fa-bolt", color: "from-yellow-400 to-orange-500" },
   ];
 
   return (
-    <div className="relative">
+    <div className={styles.container}>
+      {/* Floating Action Button */}
       <button
         onClick={() => setShowMenu(!showMenu)}
-        className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white flex items-center justify-center shadow-lg hover:shadow-xl transition fixed bottom-24 right-6 z-40"
+        className={`${styles.fabButton} ${showMenu ? styles.active : ''}`}
         title="Create post"
       >
-        <i className="fa-solid fa-plus text-xl"></i>
+        <i className="fa-solid fa-plus text-2xl"></i>
       </button>
 
-      {/* Dropdown Menu */}
+      {/* Animated Options Menu */}
       {showMenu && (
-        <div className="absolute bottom-16 right-0 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden w-48 z-50">
-          {options.map((option) => (
-            <button
-              key={option.id}
-              onClick={() => {
-                onCreatePost(option.id);
-                setShowMenu(false);
-              }}
-              className="w-full px-4 py-3 flex items-center gap-3 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm"
-            >
-              <i className={`${option.icon} w-5`}></i>
-              {option.label}
-            </button>
-          ))}
-        </div>
+        <>
+          {/* Backdrop */}
+          <div 
+            className={styles.backdrop}
+            onClick={() => setShowMenu(false)}
+          />
+          
+          {/* Menu Items */}
+          <div className={styles.menuItems}>
+            {options.map((option, index) => (
+              <button
+                key={option.id}
+                onClick={() => {
+                  onCreatePost(option.id);
+                  setShowMenu(false);
+                }}
+                style={{ 
+                  animationDelay: `${index * 50}ms`,
+                }}
+                className={styles.menuItem}
+              >
+                <div className={`${styles.iconBg} bg-gradient-to-br ${option.color}`}>
+                  <i className={`${option.icon} text-sm`}></i>
+                </div>
+                <span className={styles.menuLabel}>
+                  {option.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

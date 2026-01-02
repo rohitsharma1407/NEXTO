@@ -25,14 +25,14 @@ export default function ProfileGrid({ posts = [], activeTab = "posts", loading =
   }
 
   return (
-    <div className="w-full bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-3xl grid grid-cols-3 gap-1 p-1">
+    <div className="w-full">
+      <div className="grid grid-cols-3 gap-1 sm:gap-2">
         {displayPosts.map((post, index) => (
           <div
             key={post.id || index}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-            className="aspect-square bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden cursor-pointer relative group"
+            className="aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden cursor-pointer relative group rounded-md shadow-sm hover:shadow-md transition-all duration-300"
           >
             {/* Post Image */}
             {post.image ? (
@@ -40,24 +40,24 @@ export default function ProfileGrid({ posts = [], activeTab = "posts", loading =
                 src={post.image}
                 alt="post"
                 loading="lazy"
-                className="w-full h-full object-cover group-hover:opacity-75 transition"
+                className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-75"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800">
-                <i className="fa-solid fa-image text-2xl text-gray-500"></i>
+              <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+                <i className="fa-solid fa-image text-3xl text-gray-400"></i>
               </div>
             )}
 
-            {/* Hover Overlay */}
+            {/* Hover Overlay with colorful gradient */}
             {hoveredIndex === index && (
-              <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-6">
-                <div className="flex items-center gap-2 text-white">
+              <div className="absolute inset-0 bg-black/35 backdrop-blur-[1px] flex items-center justify-center gap-8 animate-fadeIn text-white">
+                <div className="flex items-center gap-2 text-white drop-shadow">
                   <i className="fa-solid fa-heart text-lg"></i>
-                  <span className="text-sm font-semibold">{post.likes || 0}</span>
+                  <span className="text-sm font-semibold">{(post.likes || 0).toLocaleString()}</span>
                 </div>
-                <div className="flex items-center gap-2 text-white">
+                <div className="flex items-center gap-2 text-white drop-shadow">
                   <i className="fa-solid fa-comment text-lg"></i>
-                  <span className="text-sm font-semibold">{post.comments || 0}</span>
+                  <span className="text-sm font-semibold">{(post.comments || 0).toLocaleString()}</span>
                 </div>
               </div>
             )}

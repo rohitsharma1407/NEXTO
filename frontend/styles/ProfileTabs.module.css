@@ -1,0 +1,44 @@
+.container {
+  @apply w-full border-t-2 border-transparent bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-blue-900/20 backdrop-blur-xl sticky top-0 z-30 shadow-lg;
+  border-image: linear-gradient(90deg, #a855f7, #ec4899, #3b82f6) 1;
+}
+
+.innerContainer {
+  @apply mx-auto max-w-3xl;
+}
+
+.tabsWrapper {
+  @apply flex items-center justify-center gap-12 sm:gap-16;
+}
+
+.tabButton {
+  @apply group relative flex items-center justify-center gap-2.5 px-5 py-4 text-xs sm:text-sm font-black tracking-wider transition-all duration-300;
+}
+
+.active {
+  @apply bg-gradient-to-r bg-clip-text text-transparent scale-110;
+}
+
+.inactive {
+  @apply text-gray-500 dark:text-gray-400 hover:scale-105;
+}
+
+.iconActive {
+  @apply w-10 h-10 rounded-full flex items-center justify-center shadow-xl animate-pulse;
+}
+
+.iconInactive {
+  @apply w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center group-hover:bg-gray-300 dark:group-hover:bg-gray-600;
+}
+
+.iconWhite {
+  @apply text-white;
+}
+
+.tabLabel {
+  @apply hidden sm:inline uppercase;
+}
+
+.activeIndicator {
+  @apply absolute -top-[2px] left-0 right-0 h-1 rounded-full animate-slideInTop shadow-lg;
+}

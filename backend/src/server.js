@@ -19,6 +19,8 @@ app.use("/api/news", require("./routes/news.routes"));
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/user", require("./routes/user.routes"));
 app.use("/api/admin", require("./routes/admin.routes"));
+app.use("/api/posts", require("./routes/post.routes"));
+app.use("/api/follow", require("./routes/follow.routes"));
 
 // Static uploads (profile images, etc.)
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));

@@ -1,0 +1,23 @@
+.container {
+  @apply w-full bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900/10 dark:to-pink-900/10;
+}
+
+.grid {
+  @apply mx-auto max-w-3xl grid grid-cols-3 gap-1 sm:gap-2 p-1 sm:p-2;
+}
+
+.gridItem {
+  @apply relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 aspect-square cursor-pointer group;
+}
+
+.image {
+  @apply w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 group-hover:saturate-150;
+}
+
+.overlay {
+  @apply absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100;
+}
+
+.overlayIcon {
+  @apply text-white text-2xl;
+}

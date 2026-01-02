@@ -4,6 +4,7 @@ import Link from "next/link";
 import AuthModal from "../modals/AuthModal";
 import { useRouter } from "next/navigation";
 import useUser from "../../hooks/useUser";
+import styles from "./OptionsBar.module.css";
 
 const ICONS = {
   home: "fa-solid fa-house",
@@ -16,40 +17,85 @@ const ICONS = {
 export default function OptionsBar() {
   const [active, setActive] = useState("home");
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const { user } = useUser();
+  const [showUploadMenu, setShowUploadMenu] = useState(false);
+  const { user, isGuest } = useUser();
   const router = useRouter();
 
   const handleProfileClick = () => {
-    console.log("Profile clicked, user state:", user);
-    console.log("User exists:", !!user);
-    if (user) {
-      console.log("User exists, navigating to profile");
+    console.log("Profile clicked, user state:", user, "isGuest:", isGuest);
+    
+    // If user is logged in, go to profile
+    if (user && !isGuest) {
+      console.log("User logged in, navigating to profile");
       router.push("/profile");
     } else {
-      console.log("No user, showing auth modal");
+      // If guest or not logged in, show auth modal
+      console.log("Guest or not logged in, showing auth modal");
       setShowAuthModal(true);
     }
   };
+
+  const handleAuthModalClose = () => {
+    setShowAuthModal(false);
+  };
+
+  const uploadOptions = [
+    { id: "local-news", label: "Local News", icon: "fa-solid fa-newspaper", gradient: "linear-gradient(135deg,#22c55e,#10b981)", action: () => router.push("/explore?upload=true") },
+    { id: "post", label: "Create Post", icon: "fa-solid fa-image", gradient: "linear-gradient(135deg,#a855f7,#ec4899)", action: () => router.push("/profile") },
+  ];
 
   const navItems = [
     { id: "home", label: "Home", icon: ICONS.home, href: "/" },
     { id: "explore", label: "Explore", icon: ICONS.explore, href: "/explore" },
     { id: "add", label: "Add", icon: ICONS.add, href: "#", action: true },
-    { id: "messages", label: "Messages", icon: ICONS.messages, href: "/alerts" },
+    { id: "messages", label: "Alerts", icon: ICONS.messages, href: "/alerts" },
     { id: "profile", label: "Profile", icon: ICONS.profile, href: "#", action: true },
   ];
 
-  const handleNavClick = (item) => {
-    setActive(item.id);
-    if (item.onClick) {
-      item.onClick();
-    }
-  };
-
   return (
     <>
-      <div className="optionsbar">
+      <div className={styles.bar}>
         {navItems.map((item) => {
+          if (item.id === "add") {
+            return (
+              <div key={item.id} className={styles.addWrapper}>
+                <button
+                  onClick={() => setShowUploadMenu(!showUploadMenu)}
+                  className={`${styles.item} ${styles.addButton} ${showUploadMenu ? styles.addActive : ""}`}
+                >
+                  <span className={styles.icon}>
+                    <i className={`${item.icon} ${styles.iconInner} ${showUploadMenu ? styles.rotated : ""}`}></i>
+                  </span>
+                  <span className={styles.label}>{item.label}</span>
+                </button>
+                
+                {/* Upload Menu */}
+                {showUploadMenu && (
+                  <>
+                    <div className={styles.backdrop} onClick={() => setShowUploadMenu(false)}></div>
+                    <div className={styles.uploadMenu}>
+                      {uploadOptions.map((option) => (
+                        <button
+                          key={option.id}
+                          onClick={() => {
+                            option.action();
+                            setShowUploadMenu(false);
+                          }}
+                          className={styles.uploadOption}
+                        >
+                          <div className={styles.uploadIcon} style={{ backgroundImage: option.gradient }}>
+                            <i className={option.icon}></i>
+                          </div>
+                          <span>{option.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          }
+          
           if (item.id === "profile") {
             return (
               <button
@@ -58,29 +104,13 @@ export default function OptionsBar() {
                   setActive(item.id);
                   handleProfileClick();
                 }}
-                className={`flex flex-col items-center gap-1 transition-all ${
-                  active === item.id ? "text-primary scale-110" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-                }`}
-                style={{ background: 'none', border: 'none' }}
+                className={`${styles.item} ${active === item.id ? styles.active : ""}`}
               >
-                <span className="text-xl"><i className={item.icon}></i></span>
-                <span className="text-xs font-semibold hidden xs:block">{item.label}</span>
-              </button>
-            );
-          }
-          
-          if (item.action) {
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item)}
-                className={`flex flex-col items-center gap-1 transition-all ${
-                  active === item.id ? "text-primary scale-110" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-                }`}
-                style={{ background: 'none', border: 'none' }}
-              >
-                <span className="text-xl"><i className={item.icon}></i></span>
-                <span className="text-xs font-semibold hidden xs:block">{item.label}</span>
+                <span className={styles.icon}><i className={item.icon}></i></span>
+                <span className={styles.label}>{item.label}</span>
+                {user && !isGuest && (
+                  <span className={styles.onlineDot}></span>
+                )}
               </button>
             );
           }
@@ -90,18 +120,17 @@ export default function OptionsBar() {
               key={item.id}
               href={item.href}
               onClick={() => setActive(item.id)}
-              className={`flex flex-col items-center gap-1 transition-all ${
-                active === item.id ? "text-primary scale-110" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-              }`}
+              className={`${styles.item} ${active === item.id ? styles.active : ""}`}
             >
-              <span className="text-xl"><i className={item.icon}></i></span>
-              <span className="text-xs font-semibold hidden xs:block">{item.label}</span>
+              <span className={styles.icon}><i className={item.icon}></i></span>
+              <span className={styles.label}>{item.label}</span>
             </Link>
           );
         })}
       </div>
       
-      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+      {/* Auth Modal for Guest Users */}
+      <AuthModal isOpen={showAuthModal} onClose={handleAuthModalClose} />
     </>
   );
 }

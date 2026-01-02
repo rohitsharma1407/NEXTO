@@ -2,77 +2,92 @@
 import { useState, useEffect } from "react";
 import useNews from "../../hooks/useNews";
 import NewsCard from "../../components/news/NewsCard";
+import UploadNewsModal from "../../components/news/UploadNewsModal";
+import { useUser } from "../../context/UserContext";
+import styles from "./Explore.module.css";
 
 const CATEGORIES = [
-  { id: "all", label: "All", icon: "📰" },
-  { id: "technology", label: "Tech", icon: "🤖" },
-  { id: "sports", label: "Sports", icon: "⚽" },
-  { id: "business", label: "Business", icon: "💼" },
-  { id: "entertainment", label: "Entertainment", icon: "🎬" },
-  { id: "health", label: "Health", icon: "🏥" },
+  { id: "all", label: "All", iconClass: "fa-newspaper", gradient: "linear-gradient(135deg,#4b5563,#111827)" },
+  { id: "local", label: "Local", iconClass: "fa-location-dot", gradient: "linear-gradient(135deg,#10b981,#059669)" },
+  { id: "technology", label: "Tech", iconClass: "fa-robot", gradient: "linear-gradient(135deg,#a855f7,#ec4899)" },
+  { id: "sports", label: "Sports", iconClass: "fa-football", gradient: "linear-gradient(135deg,#f97316,#ef4444)" },
+  { id: "business", label: "Business", iconClass: "fa-briefcase", gradient: "linear-gradient(135deg,#2563eb,#06b6d4)" },
+  { id: "entertainment", label: "Entertainment", iconClass: "fa-clapperboard", gradient: "linear-gradient(135deg,#ec4899,#f43f5e)" },
+  { id: "health", label: "Health", iconClass: "fa-heart-pulse", gradient: "linear-gradient(135deg,#0ea5e9,#22c55e)" },
 ];
 
 export default function ExplorePage() {
   const { news, loading, fetchNews } = useNews();
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     const category = selectedCategory === "all" ? "" : selectedCategory;
     fetchNews({ category });
-  }, [selectedCategory]);
+  }, [selectedCategory, fetchNews]);
 
   const filteredNews = selectedCategory === "all" ? news : news.filter(n => n.category === selectedCategory);
 
   return (
-    <div className="w-full">
-      {/* Category Filter */}
-      <div className="sticky top-0 z-40 bg-white border-b border-border-gray">
-        <div className="flex gap-2 overflow-x-auto px-3 py-3 scrollbar-hide">
+    <div className={styles.page}>
+      <div className={styles.filterBar}>
+        <div className={`${styles.filterRail} ${styles.scrollbarHide}`}>
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap transition ${
-                selectedCategory === cat.id
-                  ? "bg-primary text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+              className={`${styles.categoryButton} ${selectedCategory === cat.id ? styles.active : styles.inactive}`}
+              style={{ "--category-gradient": cat.gradient }}
             >
-              <span className="text-lg">{cat.icon}</span>
-              <span className="text-sm font-semibold">{cat.label}</span>
+              <span className={styles.categoryIcon}>
+                <i className={`fa-solid ${cat.iconClass}`}></i>
+              </span>
+              <span className={styles.categoryLabel}>{cat.label}</span>
+              {selectedCategory === cat.id && (
+                <span className={styles.countChip}>{filteredNews.length}</span>
+              )}
             </button>
           ))}
         </div>
       </div>
 
-      {/* News Grid */}
-      <div className="px-3 py-2">
+      <div className={styles.newsSection}>
         {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="text-center">
-              <div className="animate-spin text-4xl mb-4">🔄</div>
-              <p className="text-gray-500 font-semibold">Loading {selectedCategory}...</p>
-            </div>
+          <div className={styles.loaderWrap}>
+            <div className={styles.spinner} aria-hidden="true"></div>
+            <p className={styles.loadingText}>Loading {selectedCategory} news...</p>
           </div>
         ) : filteredNews && filteredNews.length > 0 ? (
-          filteredNews.map((item, idx) => (
-            <NewsCard
-              key={idx}
-              title={item.title || "Breaking News"}
-              summary={item.summary || item.description || ""}
-              author={item.source || "NEXTO News"}
-            />
-          ))
+          <div className={styles.newsList}>
+            {filteredNews.map((item, idx) => (
+              <NewsCard
+                key={idx}
+                title={item.title || "Breaking News"}
+                summary={item.summary || item.description || ""}
+                author={item.source || "NEXTO News"}
+              />
+            ))}
+          </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No news found</h3>
-            <p className="text-sm text-gray-500 max-w-xs">
-              Try selecting a different category or check back later
+          <div className={styles.emptyState}>
+            <div className={styles.emptyEmoji}>🔍</div>
+            <h3 className={styles.emptyTitle}>No news found</h3>
+            <p className={styles.emptySubtitle}>
+              Try a different category or check back later.
             </p>
           </div>
         )}
       </div>
+
+      <UploadNewsModal
+        isOpen={showUploadModal}
+        onClose={() => setShowUploadModal(false)}
+        onSuccess={() => {
+          setShowUploadModal(false);
+          fetchNews({ category: selectedCategory === "all" ? "" : selectedCategory });
+        }}
+      />
     </div>
   );
 }

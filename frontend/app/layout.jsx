@@ -1,8 +1,6 @@
 import "../styles/globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Header from "../components/layout/Header";
-import LiveBar from "../components/layout/LiveBar";
-import Stories from "../components/stories/Stories";
+import GlobalTopBars from "../components/layout/GlobalTopBars";
 import OptionsBar from "../components/layout/OptionsBar";
 import Footer from "../components/layout/Footer";
 import { Providers } from "../components/Providers";
@@ -24,9 +22,7 @@ export default function RootLayout({ children }) {
         <Providers>
           <div className="app-wrapper">
             <div className="app-container">
-              <Header />
-              <LiveBar />
-              <Stories />
+              <GlobalTopBars />
               <main className="main">
                 {children}
               </main>

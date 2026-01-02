@@ -1,0 +1,151 @@
+.tabsWrapper {
+  width: 100%;
+  border-top: 2px solid transparent;
+  background: linear-gradient(to right, rgba(240, 230, 255, 0.4), rgba(255, 182, 193, 0.2), rgba(173, 216, 230, 0.2));
+  backdrop-filter: blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.tabsContainer {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.tabsList {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding: 1rem 0;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 1rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 300ms;
+  border: none;
+  background: transparent;
+}
+
+.tab.active {
+  transform: scale(1.1);
+}
+
+.tab:not(.active) {
+  color: #6b7280;
+}
+
+.tab:not(.active):hover {
+  color: #9ca3af;
+  transform: scale(1.05);
+}
+
+.tabIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 300ms;
+}
+
+.tab.active .tabIcon {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  box-shadow: 0 12px 30px rgba(168, 85, 247, 0.3);
+  animation: pulse-icon 2s ease-in-out infinite;
+}
+
+.tab:not(.active) .tabIcon {
+  background: rgba(229, 231, 235, 1);
+  color: #4b5563;
+}
+
+.tab:not(.active):hover .tabIcon {
+  background: rgba(243, 244, 246, 1);
+}
+
+.tabLabel {
+  text-transform: uppercase;
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .tabLabel {
+    display: inline;
+  }
+}
+
+.tab.active .tabLabel {
+  background: linear-gradient(to right, #7c3aed, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tabUnderline {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  border-radius: 2px;
+  animation: slideInTop 300ms ease-out;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+}
+
+@keyframes pulse-icon {
+  0%, 100% {
+    box-shadow: 0 12px 30px rgba(168, 85, 247, 0.3);
+  }
+  50% {
+    box-shadow: 0 16px 40px rgba(236, 72, 153, 0.4);
+  }
+}
+
+@keyframes slideInTop {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .tabsList {
+    gap: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .tab {
+    padding: 0.75rem 0.75rem;
+    font-size: 0.65rem;
+  }
+
+  .tabIcon {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .tabUnderline {
+    bottom: -6px;
+    height: 3px;
+  }
+}

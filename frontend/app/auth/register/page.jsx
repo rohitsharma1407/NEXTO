@@ -2,22 +2,25 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useUser from "../../../hooks/useUser";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
+  const { saveSession } = useUser();
 
   const registerUser = async () => {
     setError("");
 
     if (!email || !password || !confirmPassword) {
-      setError("Please fill all fields");
+      setError("Please fill all required fields");
       return;
     }
 
@@ -40,16 +43,40 @@ export default function Register() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ email, password, fullName }),
         }
       );
 
       const data = await res.json();
 
       if (data.success && data.token) {
-        localStorage.setItem("nexto_token", data.token);
-        localStorage.setItem("nexto_user", JSON.stringify(data.user));
-        router.push("/profile");
+        // Use UserContext to save session
+        const safeUser = {
+          _id: data.user?._id,
+          email: data.user?.email,
+          username: data.user?.username || email.split('@')[0],
+          fullName: data.user?.fullName || '',
+          profileImage: data.user?.profileImage || '',
+          bio: data.user?.bio || '',
+          website: data.user?.website || '',
+          location: data.user?.location || '',
+          followers: data.user?.followers || 0,
+          following: data.user?.following || 0,
+          postsCount: data.user?.postsCount || 0,
+          profileViews: data.user?.profileViews || 0,
+          totalLikes: data.user?.totalLikes || 0,
+          socialLinks: data.user?.socialLinks || {},
+          isVerified: data.user?.isVerified || false,
+        };
+        
+        // Save to UserContext (which will also save to localStorage)
+        saveSession(data.token, safeUser);
+        
+        // Remove guest mode
+        localStorage.removeItem("nexto_guest_mode");
+        
+        // Navigate to home page
+        router.push("/");
       } else {
         setError(data.message || "Registration failed");
       }
@@ -141,7 +168,56 @@ export default function Register() {
             {error}
           </div>
         )}
-
+        {/* Full Name Input (Optional) */}
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{
+            display: 'block',
+            fontSize: '14px',
+            fontWeight: '500',
+            color: '#374151',
+            marginBottom: '8px'
+          }}>Full Name <span style={{ color: '#9ca3af', fontWeight: '400' }}>(Optional)</span></label>
+          <div style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <i className="fa-solid fa-user" style={{
+              position: 'absolute',
+              left: '16px',
+              color: '#9ca3af',
+              fontSize: '16px'
+            }}></i>
+            <input
+              type="text"
+              placeholder="John Doe"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              onKeyPress={handleKeyPress}
+              style={{
+                width: '100%',
+                background: '#f9fafb',
+                border: '1px solid #e5e7eb',
+                borderRadius: '12px',
+                padding: '14px 16px 14px 48px',
+                fontSize: '15px',
+                outline: 'none',
+                transition: 'all 0.2s',
+                color: '#1f2937'
+              }}
+              onFocus={(e) => {
+                e.target.style.background = '#ffffff';
+                e.target.style.borderColor = '#f093fb';
+                e.target.style.boxShadow = '0 0 0 3px rgba(240, 147, 251, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.background = '#f9fafb';
+                e.target.style.borderColor = '#e5e7eb';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+          </div>
+        </div>
         {/* Email Input */}
         <div style={{ marginBottom: '16px' }}>
           <label style={{
@@ -216,7 +292,7 @@ export default function Register() {
             }}></i>
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
+              placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}

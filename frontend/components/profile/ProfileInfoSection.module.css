@@ -1,0 +1,191 @@
+.section {
+  width: 100%;
+  padding: 1.5rem 1rem;
+  animation: fadeIn 600ms ease-out;
+}
+
+.container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.profilePictureWrapper {
+  flex-shrink: 0;
+}
+
+.pictureBorder {
+  padding: 2.5px;
+  border-radius: 50%;
+  background: linear-gradient(to top right, #fbbf24, #ec4899, #a855f7);
+  transition: all 300ms;
+  cursor: pointer;
+}
+
+.pictureBorder:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to top right, #fcd34d, #f472b6, #c084fc);
+}
+
+.pictureInner {
+  padding: 3px;
+  border-radius: 50%;
+  background: white;
+}
+
+.picture {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(243, 244, 246, 1), rgba(229, 231, 235, 1));
+  overflow: hidden;
+  object-fit: cover;
+  transition: all 300ms;
+}
+
+.pictureBorder:hover .picture {
+  transform: scale(1.05);
+}
+
+@media (min-width: 640px) {
+  .picture {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+.infoSection {
+  flex: 1;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+  flex: 1;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  border: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 300ms;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.button.edit {
+  background: linear-gradient(to right, #a855f7, #ec4899, #3b82f6);
+  color: white;
+  min-width: auto;
+}
+
+.button.edit:hover {
+  background: linear-gradient(to right, #9333ea, #f472b6, #2563eb);
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+}
+
+.button.edit:active {
+  transform: scale(0.95);
+}
+
+.button.share {
+  background: linear-gradient(to right, #3b82f6, #06b6d4);
+  color: white;
+  min-width: auto;
+}
+
+.button.share:hover {
+  background: linear-gradient(to right, #2563eb, #0891b2);
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+.button.share:active {
+  transform: scale(0.95);
+}
+
+.button.follow {
+  background: #3b82f6;
+  color: white;
+  padding: 0.375rem 1.25rem;
+}
+
+.button.follow:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.button.follow:active {
+  transform: scale(0.95);
+}
+
+.button i {
+  font-size: 0.875rem;
+}
+
+.infoText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.email {
+  font-size: 0.75rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.email i {
+  font-size: 0.65rem;
+}
+
+@media (max-width: 640px) {
+  .container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .picture {
+    width: 80px;
+    height: 80px;
+  }
+
+  .button {
+    flex: 1;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .buttonGroup {
+    margin-bottom: 0.75rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

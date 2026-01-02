@@ -1,0 +1,63 @@
+.container {
+  @apply fixed bottom-24 right-6 z-50;
+}
+
+.fabButton {
+  @apply w-14 h-14 rounded-full bg-gradient-to-tr from-purple-600 via-pink-500 to-red-500 hover:from-purple-700 hover:via-pink-600 hover:to-red-600 text-white flex items-center justify-center shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 active:scale-95;
+}
+
+.fabButton.active {
+  @apply rotate-45;
+}
+
+.backdrop {
+  @apply fixed inset-0 bg-black/20 backdrop-blur-sm -z-10;
+}
+
+.menuItems {
+  @apply absolute bottom-20 right-0 flex flex-col gap-3 animate-slideUp;
+}
+
+.menuItem {
+  @apply group flex items-center gap-3 bg-white dark:bg-gray-800 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 pr-5 pl-3 py-3 animate-fadeIn;
+}
+
+.iconBg {
+  @apply w-10 h-10 rounded-full flex items-center justify-center text-white shadow-lg;
+}
+
+.menuLabel {
+  @apply text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}

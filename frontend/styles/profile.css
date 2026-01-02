@@ -1,7 +1,8 @@
 /* Profile Styles */
 
 .profile-container {
-  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+  background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+  color: #111827;
 }
 
 .profile-container.dark {
@@ -13,7 +14,9 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 18px 16px;
+  background: transparent;
 }
 
 .profile-header.dark {
@@ -23,13 +26,17 @@
 /* Profile Picture */
 .profile-picture {
   position: relative;
-  width: 96px;
-  height: 96px;
+  width: 112px; /* base mobile size */
+  height: 112px;
   border-radius: 50%;
   border: 3px solid #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 4px;
+  background: linear-gradient(135deg, #ff7aab 0%, #7c3aed 60%, #06b6d4 100%);
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-picture.dark {
@@ -42,12 +49,28 @@
   object-fit: cover;
 }
 
+@media (min-width: 768px) {
+  .profile-picture {
+    width: 128px; /* desktop size */
+    height: 128px;
+  }
+}
+
+/* Bio block styling */
+.profile-bio {
+  line-height: 1.4;
+}
+
+.profile-bio a {
+  text-decoration: underline;
+}
+
 /* Stats Section */
 .profile-stats {
   display: flex;
   justify-content: space-around;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 0 0 0;
 }
 
 .profile-stats.dark {
@@ -57,12 +80,11 @@
 .stat-item {
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .stat-item:hover {
-  opacity: 0.7;
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
 .stat-value {
@@ -126,7 +148,7 @@
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.25rem;
+  gap: 4px;
   padding: 0.25rem;
 }
 
@@ -151,7 +173,7 @@
 }
 
 .grid-item:hover {
-  opacity: 0.85;
+  transform: translateY(-4px);
 }
 
 .grid-overlay {
@@ -160,7 +182,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.45) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,7 +204,7 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff7aab 0%, #764ba2 100%);
   color: white;
   border: none;
   font-size: 1.25rem;

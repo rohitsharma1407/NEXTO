@@ -1,56 +1,68 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import styles from "./Footer.module.css";
 
 export default function Footer() {
-
   return (
-    <>
-      <footer className="w-full bg-white dark:bg-black border-t dark:border-gray-800">
-        <div className="max-w-[768px] mx-auto px-4 py-4">
-          <div className="flex flex-col gap-3 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-            {/* Left */}
-            <div className="order-3 sm:order-1 text-[11px] sm:text-xs text-gray-500 dark:text-gray-600 w-full sm:w-auto text-center sm:text-left sm:justify-self-start">
-              © 2025 <b>NEXTO</b>. All rights reserved.
-            </div>
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.grid}>
+          <div className={styles.card}>
+            <h3 className={styles.brandTitle}>NEXTO</h3>
+            <p className={styles.brandText}>
+              Your go-to platform for global news, curated just for you.
+            </p>
+          </div>
 
-            {/* Middle */}
-            <div className="order-1 sm:order-2 flex justify-center items-center gap-4 w-full sm:w-auto sm:justify-self-center">
-              <a href="#" aria-label="Facebook" className="w-9 h-9 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 transition-colors text-white">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" aria-label="Instagram" className="w-9 h-9 flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 hover:opacity-90 transition-opacity text-white">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" aria-label="X / Twitter" className="w-9 h-9 flex items-center justify-center rounded-full bg-black hover:bg-gray-800 transition-colors text-white">
-                <i className="fab fa-x-twitter"></i>
-              </a>
-            </div>
+          <div className={styles.card}>
+            <h4 className={styles.sectionTitle}>Quick Links</h4>
+            <ul className={styles.linkList}>
+              <li>
+                <Link href="#" className={styles.linkItem}>
+                  <span className={styles.bullet}></span>
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className={styles.linkItem}>
+                  <span className={styles.bullet}></span>
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className={styles.linkItem}>
+                  <span className={styles.bullet}></span>
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-            {/* Right */}
-            <div className="order-2 sm:order-3 flex flex-wrap justify-center sm:justify-end gap-3 text-xs text-gray-600 dark:text-gray-400 w-full sm:w-auto sm:justify-self-end sm:text-right">
-              <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
-              <Link href="/terms" className="hover:underline">Terms</Link>
-              <Link href="/disclaimer" className="hover:underline">Disclaimer</Link>
-              <Link href="/contact" className="hover:underline">Contact</Link>
+          <div className={styles.card}>
+            <h4 className={`${styles.sectionTitle} ${styles.socialTitle}`}>Follow Us</h4>
+            <div className={styles.socialRow}>
+              <a href="#" className={`${styles.socialButton} ${styles.twitter}`} aria-label="Twitter">
+                <i className="fa-brands fa-twitter"></i>
+              </a>
+              <a href="#" className={`${styles.socialButton} ${styles.facebook}`} aria-label="Facebook">
+                <i className="fa-brands fa-facebook"></i>
+              </a>
+              <a href="#" className={`${styles.socialButton} ${styles.instagram}`} aria-label="Instagram">
+                <i className="fa-brands fa-instagram"></i>
+              </a>
             </div>
           </div>
         </div>
-      </footer>
 
-    </>
+        <div className={styles.divider}></div>
+
+        <div className={styles.copy}>
+          <p>
+            &copy; 2025 NEXTO News. All rights reserved. | Crafted with <span className={styles.heart}>❤️</span> for news lovers
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 }
-
-
-
-// "use client";
-// import React from "react";
-
-// export default function Footer() {
-//   return (
-//     <div className="w-full flex items-center justify-center py-4 border-t border-gray-200 bg-white">
-//       <p className="text-xs text-gray-600">© 2025 NEXTO</p>
-//     </div>
-//   );
-// }

@@ -1,0 +1,31 @@
+.container {
+  @apply w-full bg-gradient-to-b from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-blue-900/10 dark:to-pink-900/10;
+}
+
+.innerContainer {
+  @apply mx-auto max-w-3xl px-4 py-6;
+}
+
+.newsFeed {
+  @apply flex flex-col gap-4;
+}
+
+.emptyState {
+  @apply text-center py-12;
+}
+
+.emptyIcon {
+  @apply text-6xl text-gray-400 dark:text-gray-600 mb-4;
+}
+
+.emptyText {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.loadingContainer {
+  @apply flex justify-center items-center py-12;
+}
+
+.spinner {
+  @apply animate-spin rounded-full h-12 w-12 border-b-2 border-gradient-to-r from-purple-600 to-pink-600;
+}

@@ -52,6 +52,8 @@ router.put("/profile/:id", auth, async (req, res) => {
       "phone",
       "pronouns",
       "profileImage",
+      "socialLinks",
+      "isPrivate",
     ];
     const update = {};
     for (const key of allowed) {
@@ -84,6 +86,32 @@ router.post("/preferences", async (req, res) => {
   const { userId, preferences } = req.body;
   const user = await User.findByIdAndUpdate(userId, { preferences }, { new: true }).select("-password");
   res.json({ success: true, user });
+});
+
+// Update user preferences (authenticated)
+router.put("/preferences", auth, async (req, res) => {
+  try {
+    const { preferences } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.userId,
+      { preferences },
+      { new: true }
+    ).select("-password");
+    res.json({ success: true, data: user });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update preferences" });
+  }
+});
+
+// Increment profile views
+router.post("/profile/:id/view", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await User.findByIdAndUpdate(id, { $inc: { profileViews: 1 } });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to increment views" });
+  }
 });
 
 module.exports = router;

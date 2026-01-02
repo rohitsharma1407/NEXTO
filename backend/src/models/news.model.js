@@ -12,6 +12,20 @@ const newsSchema = new mongoose.Schema(
 		publishedAt: { type: Date },
 		summary: { type: String },
 		imageUrl: { type: String },
+		// User-generated news fields
+		isUserGenerated: { type: Boolean, default: false },
+		author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		authorName: { type: String },
+		isLocal: { type: Boolean, default: false },
+		isApproved: { type: Boolean, default: false },
+		views: { type: Number, default: 0 },
+		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+		comments: [{
+			user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+			userName: String,
+			text: String,
+			createdAt: { type: Date, default: Date.now }
+		}],
 	},
 	{ timestamps: true }
 );

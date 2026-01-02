@@ -1,0 +1,43 @@
+.container {
+  @apply space-y-4;
+}
+
+.categoryGroup {
+  @apply bg-white dark:bg-gray-800 rounded-xl p-4;
+}
+
+.categoryLabel {
+  @apply flex items-center gap-3 cursor-pointer;
+}
+
+.checkbox {
+  @apply w-5 h-5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 accent-purple-600 transition-colors;
+}
+
+.categoryCheckbox:checked {
+  @apply border-purple-600 bg-purple-600;
+}
+
+.categoryName {
+  @apply text-sm font-bold text-gray-900 dark:text-white;
+}
+
+.categoryIcon {
+  @apply w-5 h-5 text-gray-600 dark:text-gray-400;
+}
+
+.categoryDescription {
+  @apply text-xs text-gray-500 dark:text-gray-400 mt-1 ml-8;
+}
+
+.headerText {
+  @apply text-sm font-bold text-gray-900 dark:text-white mb-4;
+}
+
+.categoryList {
+  @apply grid grid-cols-2 gap-3;
+}
+
+.categoryItem {
+  @apply flex items-center gap-2 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-600/50 transition-colors;
+}

@@ -1,0 +1,270 @@
+.section {
+  width: 100%;
+  background: linear-gradient(to right, rgba(250, 245, 255, 0.8), rgba(255, 182, 193, 0.2), rgba(173, 216, 230, 0.2));
+  border-bottom: 2px solid transparent;
+  background-clip: padding-box;
+  backdrop-filter: blur(8px);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fbbf24, #ec4899, #a855f7, #3b82f6);
+  background-size: 300% 100%;
+}
+
+.container {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  position: relative;
+}
+
+.highlightRow {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.highlightRow::-webkit-scrollbar {
+  height: 4px;
+}
+
+.highlightRow::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.highlightRow::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.3);
+  border-radius: 2px;
+}
+
+.highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 85px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.highlightImageWrapper {
+  position: relative;
+}
+
+.highlightBorder {
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24, #f97316, #ef4444);
+  transition: all 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+.highlight:hover .highlightBorder {
+  transform: scale(1.1);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25);
+}
+
+.highlightInnerBorder {
+  padding: 3px;
+  border-radius: 50%;
+  background: white;
+}
+
+.highlightImage {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(243, 244, 246, 1), rgba(229, 231, 235, 1));
+  overflow: hidden;
+  transition: all 500ms;
+}
+
+.highlightImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 500ms;
+}
+
+.highlight:hover .highlightImage img {
+  transform: scale(1.1) saturate(1.5);
+}
+
+.highlightGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.highlightImageWrapper:hover .highlightGlow {
+  opacity: 0.6;
+}
+
+.highlightLabel {
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-align: center;
+  max-width: 85px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 300ms;
+}
+
+.highlight.travel .highlightBorder {
+  background: linear-gradient(135deg, #fbbf24, #f97316, #ef4444);
+}
+
+.highlight.travel .highlightLabel {
+  background: linear-gradient(to right, #fbbf24, #f97316, #ef4444);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.highlight.travel:hover .highlightLabel {
+  transform: scale(1.1);
+}
+
+.highlight.food .highlightBorder {
+  background: linear-gradient(135deg, #ec4899, #f43f5e, #ef4444);
+}
+
+.highlight.food .highlightLabel {
+  background: linear-gradient(to right, #ec4899, #f43f5e, #ef4444);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.highlight.fitness .highlightBorder {
+  background: linear-gradient(135deg, #a855f7, #ec4899, #f43f5e);
+}
+
+.highlight.fitness .highlightLabel {
+  background: linear-gradient(to right, #a855f7, #ec4899, #f43f5e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.highlight.work .highlightBorder {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4, #10b981);
+}
+
+.highlight.work .highlightLabel {
+  background: linear-gradient(to right, #3b82f6, #06b6d4, #10b981);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.highlight.friends .highlightBorder {
+  background: linear-gradient(135deg, #10b981, #059669, #10b981);
+}
+
+.highlight.friends .highlightLabel {
+  background: linear-gradient(to right, #10b981, #059669, #10b981);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.addNew {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 85px;
+  cursor: pointer;
+}
+
+.addNewBorder {
+  padding: 3px;
+  border: 2px dashed rgba(168, 85, 247, 0.4);
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(192, 132, 250, 0.1), rgba(236, 72, 153, 0.1));
+  transition: all 500ms;
+}
+
+.addNew:hover .addNewBorder {
+  border-color: #a855f7;
+  transform: scale(1.1);
+}
+
+.addNewImage {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(240, 230, 255, 0.6), rgba(253, 230, 255, 0.6));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 500ms;
+}
+
+.addNew:hover .addNewImage {
+  background: linear-gradient(135deg, rgba(192, 132, 250, 0.2), rgba(236, 72, 153, 0.2));
+}
+
+.addNewIcon {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 300ms;
+}
+
+.addNew:hover .addNewIcon {
+  transform: scale(1.25);
+}
+
+.addNewLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #7c3aed, #ec4899);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 300ms;
+}
+
+.addNew:hover .addNewLabel {
+  transform: scale(1.1);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1rem 0.75rem;
+  }
+
+  .highlight {
+    min-width: 75px;
+  }
+
+  .highlightImage {
+    width: 65px;
+    height: 65px;
+  }
+
+  .addNewImage {
+    width: 65px;
+    height: 65px;
+  }
+
+  .addNewIcon {
+    font-size: 1.25rem;
+  }
+}

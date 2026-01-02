@@ -1,0 +1,67 @@
+.modalOverlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50;
+}
+
+.modalContainer {
+  @apply bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto;
+}
+
+.modalHeader {
+  @apply bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 px-6 py-4 flex items-center justify-between sticky top-0 z-10;
+}
+
+.modalTitle {
+  @apply text-xl font-black text-white;
+}
+
+.closeButton {
+  @apply text-white hover:scale-110 transition-transform;
+}
+
+.modalContent {
+  @apply p-6;
+}
+
+.formGroup {
+  @apply mb-6;
+}
+
+.formLabel {
+  @apply block text-sm font-bold text-gray-900 dark:text-white mb-2;
+}
+
+.formInput {
+  @apply w-full px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-purple-500 focus:outline-none transition-colors;
+}
+
+.formTextarea {
+  @apply w-full px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-purple-500 focus:outline-none transition-colors resize-none;
+}
+
+.profilePictureSection {
+  @apply flex flex-col items-center gap-4 mb-6;
+}
+
+.profilePictureUpload {
+  @apply relative;
+}
+
+.profilePicturePreview {
+  @apply w-24 h-24 rounded-full overflow-hidden border-4 border-purple-200 dark:border-purple-800 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center;
+}
+
+.uploadButton {
+  @apply px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-bold hover:from-purple-600 hover:to-pink-600 transition-all;
+}
+
+.buttonGroup {
+  @apply flex gap-3 mt-6;
+}
+
+.cancelButton {
+  @apply flex-1 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors;
+}
+
+.submitButton {
+  @apply flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl;
+}

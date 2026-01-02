@@ -1,19 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import headerStyles from "../../styles/profile.module.css";
-import pageStyles from "../../styles/profilePage.module.css";
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import ProfileStats from "../../components/profile/ProfileStats";
+import ProfileHighlights from "../../components/profile/ProfileHighlights";
 import ProfileTabs from "../../components/profile/ProfileTabs";
 import ProfileGrid from "../../components/profile/ProfileGrid";
+import MyNewsTab from "../../components/profile/MyNewsTab";
 import CreatePostButton from "../../components/profile/CreatePostButton";
 import EditProfileModal from "../../components/profile/EditProfileModal";
 import FollowersModal from "../../components/profile/FollowersModal";
 import useUser from "../../hooks/useUser";
 import { getProfile, updateProfile, getUserPosts } from "../../services/profile.service";
 
-export default function ProfilePage() {
+function ProfilePage() {
   const { user: loggedInUser, ready, setUser, logout } = useUser();
   const router = useRouter();
   const [profile, setProfile] = useState(null);
@@ -97,7 +97,7 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+      <div className="w-full h-screen flex items-center justify-center bg-white dark:bg-gray-950">
         <div className="text-center">
           <div className="animate-spin text-4xl mb-4">👤</div>
           <p className="text-gray-600 dark:text-gray-400">Loading profile...</p>
@@ -107,53 +107,63 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className={`${pageStyles.profilePageRoot} w-full min-h-screen bg-white dark:bg-gray-900`}>
-      {/* Profile Header */}
-      <ProfileHeader
-        user={profile}
-        onEditProfile={handleEditProfile}
-        onShareProfile={handleShareProfile}
-        onCopyProfile={() => {
-          const url = typeof window !== "undefined" ? window.location.href : "";
-          if (url && navigator.clipboard) {
-            navigator.clipboard.writeText(url);
-          }
-        }}
-        onLogout={async () => { 
-          console.log("ProfileHeader logout clicked");
-          setIsLoggingOut(true);
-          logout(); 
-          // Give React time to update context in all subscribers
-          setTimeout(() => {
-            console.log("Redirecting to home after logout");
-            router.push("/");
-          }, 100);
-        }}
-      />
+    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+        {/* Profile Header */}
+        <ProfileHeader
+          user={profile}
+          posts={posts.length}
+          onEditProfile={handleEditProfile}
+          onShareProfile={handleShareProfile}
+          onCopyProfile={() => {
+            const url = typeof window !== "undefined" ? window.location.href : "";
+            if (url && navigator.clipboard) {
+              navigator.clipboard.writeText(url);
+            }
+          }}
+          onLogout={async () => { 
+            console.log("ProfileHeader logout clicked");
+            setIsLoggingOut(true);
+            logout(); 
+            setTimeout(() => {
+              console.log("Redirecting to home after logout");
+              router.push("/");
+            }, 100);
+          }}
+        />
+        {/* Profile Stats are now embedded inside ProfileHeader for Instagram-like layout */}
 
-      {/* Profile Stats */}
-      <div className={`${pageStyles.sectionPad} ${pageStyles.fadeIn}`}>
-        <div className={`${pageStyles.maxWidth} ${pageStyles.statsCard} border dark:border-gray-800 bg-white dark:bg-gray-900`}>
-          <ProfileStats
-            posts={posts.length}
-            followers={profile.followers || 0}
-            following={profile.following || 0}
-            onFollowersClick={() => setShowFollowers(true)}
-          />
+        {/* Bio Section */}
+        <div className="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800/80 p-4 sm:p-6 shadow-sm profile-bio">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{profile.fullName || profile.username}</h2>
+            </div>
+            {profile.bio && <p className="text-sm text-gray-700 dark:text-gray-300">{profile.bio}</p>}
+            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+              {profile.location && <span className="flex items-center gap-2"><i className="fa-solid fa-location-dot" /> {profile.location}</span>}
+              {profile.website && <a href={profile.website} target="_blank" rel="noreferrer" className="text-blue-600 dark:text-blue-400">{profile.website}</a>}
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Profile Tabs */}
-      <div className={`${pageStyles.sectionPad} ${pageStyles.stickyTabsWrap}`}>
-        <div className={pageStyles.maxWidth}>
-          <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/* Profile Highlights - Instagram Style */}
+        <ProfileHighlights highlights={profile?.highlights || []} />
+
+        {/* Profile Tabs */}
+        <div className="sticky top-0 z-10 bg-white/90 dark:bg-gray-950/90 backdrop-blur pb-1">
+          <div className="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800/80 shadow-sm">
+            <ProfileTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          </div>
         </div>
-      </div>
 
-      {/* Profile Grid */}
-      <div className={`${pageStyles.sectionPad} ${pageStyles.gridWrap}`}>
-        <div className={pageStyles.maxWidth}>
-          <ProfileGrid posts={posts} activeTab={activeTab} loading={loading} />
+        {/* Profile Grid / News */}
+        <div>
+          {activeTab === "news" ? (
+            <MyNewsTab userId={profile._id} />
+          ) : (
+            <ProfileGrid posts={posts} activeTab={activeTab} loading={loading} />
+          )}
         </div>
       </div>
 
@@ -194,3 +204,7 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+// Export with auth protection
+import withAuth from "../../components/withAuth";
+export default withAuth(ProfilePage);

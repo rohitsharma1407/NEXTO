@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useUser from "../../../hooks/useUser";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { saveSession } = useUser();
 
   const loginUser = async () => {
     if (!email || !password) {
@@ -34,16 +36,33 @@ export default function Login() {
       const data = await res.json();
 
       if (data.success && data.token) {
-        localStorage.setItem("nexto_token", data.token);
+        // Use UserContext to save session
         const safeUser = {
           _id: data.user?._id,
           email: data.user?.email,
           username: data.user?.username,
           fullName: data.user?.fullName,
           profileImage: data.user?.profileImage,
+          bio: data.user?.bio,
+          website: data.user?.website,
+          location: data.user?.location,
+          followers: data.user?.followers,
+          following: data.user?.following,
+          postsCount: data.user?.postsCount,
+          profileViews: data.user?.profileViews,
+          totalLikes: data.user?.totalLikes,
+          socialLinks: data.user?.socialLinks,
+          isVerified: data.user?.isVerified,
         };
-        localStorage.setItem("nexto_user", JSON.stringify(safeUser));
-        router.push("/profile");
+        
+        // Save to UserContext (which will also save to localStorage)
+        saveSession(data.token, safeUser);
+        
+        // Remove guest mode
+        localStorage.removeItem("nexto_guest_mode");
+        
+        // Navigate to home page
+        router.push("/");
       } else {
         setError(data.message || "Login failed");
       }

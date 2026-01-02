@@ -8,12 +8,16 @@ export function UserProvider({ children }) {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [ready, setReady] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
+  const [hasSeenAuthModal, setHasSeenAuthModal] = useState(false);
 
   // Load from localStorage on mount only (client-side)
   useEffect(() => {
     try {
       const t = localStorage.getItem("nexto_token");
       const u = localStorage.getItem("nexto_user");
+      const guestMode = localStorage.getItem("nexto_guest_mode");
+      const seenModal = localStorage.getItem("nexto_seen_auth_modal");
       
       if (t) setToken(t);
       if (u) {
@@ -24,6 +28,8 @@ export function UserProvider({ children }) {
           localStorage.removeItem("nexto_user");
         }
       }
+      if (guestMode === "true") setIsGuest(true);
+      if (seenModal === "true") setHasSeenAuthModal(true);
     } catch (error) {
       console.error("Error loading from localStorage:", error);
     } finally {
@@ -40,6 +46,9 @@ export function UserProvider({ children }) {
       if (usr) {
         localStorage.setItem("nexto_user", JSON.stringify(usr));
         setUser(usr);
+        // Clear guest mode when user logs in
+        setIsGuest(false);
+        localStorage.removeItem("nexto_guest_mode");
       }
     } catch (error) {
       console.error("Error saving session:", error);
@@ -51,14 +60,30 @@ export function UserProvider({ children }) {
     // Clear state IMMEDIATELY - synchronously
     setToken(null);
     setUser(null);
+    setIsGuest(false);
+    setHasSeenAuthModal(false);
 
     // Then clear storage
     try {
       localStorage.removeItem("nexto_token");
       localStorage.removeItem("nexto_user");
+      localStorage.removeItem("nexto_guest_mode");
+      localStorage.removeItem("nexto_seen_auth_modal");
       console.log("Logout complete - localStorage cleared");
     } catch (error) {
       console.error("Error clearing localStorage:", error);
+    }
+  }
+
+  function continueAsGuest() {
+    try {
+      localStorage.setItem("nexto_guest_mode", "true");
+      localStorage.setItem("nexto_seen_auth_modal", "true");
+      setIsGuest(true);
+      setHasSeenAuthModal(true);
+      console.log("Continuing as guest");
+    } catch (error) {
+      console.error("Error setting guest mode:", error);
     }
   }
 
@@ -66,10 +91,17 @@ export function UserProvider({ children }) {
     token,
     user,
     ready,
+    isGuest,
+    hasSeenAuthModal,
     setToken: (t) => saveSession(t, user),
     setUser: (u) => saveSession(token, u),
     logout,
     saveSession,
+    continueAsGuest,
+    setHasSeenAuthModal: (seen) => {
+      setHasSeenAuthModal(seen);
+      if (seen) localStorage.setItem("nexto_seen_auth_modal", "true");
+    },
   };
 
   return (

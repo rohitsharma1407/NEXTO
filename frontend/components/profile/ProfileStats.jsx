@@ -1,55 +1,28 @@
 "use client";
 import React from "react";
 
+function abbrev(num) {
+  if (num >= 1_000_000) return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  if (num >= 1_000) return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+  return String(num);
+}
+
 export default function ProfileStats({ posts = 0, followers = 0, following = 0, onFollowersClick }) {
   return (
-    <div className="w-full">
-      <div className="flex justify-around py-4 px-4">
-        {/* Posts */}
-        <button
-          type="button"
-          aria-label="Posts"
-          className="group text-center cursor-pointer hover:text-gray-600 dark:hover:text-gray-400 transition rounded-lg px-3 py-2"
-        >
-          <p className="text-lg font-bold text-gray-900 dark:text-white">
-            {posts.toLocaleString()}
-          </p>
-          <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-            posts
-            <span className="block mx-auto mt-1 h-[2px] w-6 origin-center scale-x-0 bg-gray-900 dark:bg-white transition-transform duration-200 ease-out group-hover:scale-x-100"></span>
-          </p>
-        </button>
+    <div className="flex items-center gap-6">
+      <div className="text-center">
+        <p className="text-xl font-bold text-gray-900 dark:text-white">{abbrev(posts)}</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500">posts</p>
+      </div>
 
-        {/* Followers */}
-        <button
-          type="button"
-          aria-label="Followers"
-          onClick={onFollowersClick}
-          className="group text-center cursor-pointer hover:text-gray-600 dark:hover:text-gray-400 transition rounded-lg px-3 py-2"
-        >
-          <p className="text-lg font-bold text-gray-900 dark:text-white">
-            {followers.toLocaleString()}
-          </p>
-          <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-            followers
-            <span className="block mx-auto mt-1 h-[2px] w-6 origin-center scale-x-0 bg-gray-900 dark:bg-white transition-transform duration-200 ease-out group-hover:scale-x-100"></span>
-          </p>
-        </button>
+      <button type="button" aria-label="Followers" onClick={onFollowersClick} className="text-center">
+        <p className="text-xl font-bold text-gray-900 dark:text-white">{abbrev(followers)}</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500">followers</p>
+      </button>
 
-        {/* Following */}
-        <button
-          type="button"
-          aria-label="Following"
-          className="group text-center cursor-pointer hover:text-gray-600 dark:hover:text-gray-400 transition rounded-lg px-3 py-2"
-        >
-          <p className="text-lg font-bold text-gray-900 dark:text-white">
-            {following.toLocaleString()}
-          </p>
-          <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-            following
-            <span className="block mx-auto mt-1 h-[2px] w-6 origin-center scale-x-0 bg-gray-900 dark:bg-white transition-transform duration-200 ease-out group-hover:scale-x-100"></span>
-          </p>
-        </button>
+      <div className="text-center">
+        <p className="text-xl font-bold text-gray-900 dark:text-white">{abbrev(following)}</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500">following</p>
       </div>
     </div>
   );

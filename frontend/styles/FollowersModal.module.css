@@ -1,0 +1,75 @@
+.modalOverlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50;
+}
+
+.modalContainer {
+  @apply bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto;
+}
+
+.modalHeader {
+  @apply bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600 px-6 py-4 flex items-center justify-between sticky top-0 z-10;
+}
+
+.modalTitle {
+  @apply text-xl font-black text-white;
+}
+
+.closeButton {
+  @apply text-white hover:scale-110 transition-transform;
+}
+
+.searchContainer {
+  @apply p-4 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-9 bg-white dark:bg-gray-800;
+}
+
+.searchInput {
+  @apply w-full px-4 py-2 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:outline-none transition-colors;
+}
+
+.followersList {
+  @apply divide-y divide-gray-200 dark:divide-gray-700;
+}
+
+.followerItem {
+  @apply flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors;
+}
+
+.followerInfo {
+  @apply flex items-center gap-3 flex-1;
+}
+
+.followerAvatar {
+  @apply w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold;
+}
+
+.followerDetails {
+  @apply flex-1;
+}
+
+.followerName {
+  @apply font-bold text-gray-900 dark:text-white;
+}
+
+.followerHandle {
+  @apply text-xs text-gray-500 dark:text-gray-400;
+}
+
+.actionButton {
+  @apply px-4 py-1.5 rounded-lg text-sm font-bold transition-all;
+}
+
+.followButton {
+  @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+
+.unfollowButton {
+  @apply bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600;
+}
+
+.emptyState {
+  @apply text-center py-12;
+}
+
+.emptyText {
+  @apply text-gray-500 dark:text-gray-400;
+}

@@ -56,6 +56,81 @@
   }
 }
 
+/* New header card styles to match Instagram-like layout */
+.profile-header-card {
+  background: #0f1724; /* deep dark */
+  color: #fff;
+}
+
+.profile-header-row {
+  align-items: center;
+}
+
+.profile-header-card .profile-picture {
+  width: 112px;
+  height: 112px;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+}
+
+/* center stats inline */
+.profile-stats-inline .stat-item {
+  display: inline-block;
+  margin: 0 18px;
+}
+
+.profile-stats-inline .stat-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.profile-stats-inline .stat-label {
+  color: #9ca3af;
+}
+
+.profile-name h2 {
+  margin: 0;
+  color: #fff;
+}
+
+.verified-badge {
+  background: #0ea5a1;
+  border-radius: 9999px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.profile-actions .rounded-full {
+  min-width: 48px;
+}
+
+.profile-actions .px-6 {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+/* Highlights smaller and snug */
+.profile-highlights .h-16 {
+  width: 56px !important;
+  height: 56px !important;
+}
+
+/* Tabs - thicker active underline */
+.profile-tabs .tab-button.active {
+  border-bottom-width: 3px;
+  border-bottom-color: transparent;
+}
+
+.profile-tabs .tab-button.active::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 60%;
+  margin: 4px auto 0;
+  border-radius: 9999px;
+  background: linear-gradient(90deg,#ec4899,#7c3aed,#3b82f6);
+}
+
 /* Bio block styling */
 .profile-bio {
   line-height: 1.4;

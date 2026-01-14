@@ -107,6 +107,12 @@ body {
   z-index: 1;
 }
 
+/* When viewing profile pages we hide LiveBar/Stories — reduce top padding accordingly */
+.profile-active .main {
+  /* header (48px) + small buffer */
+  padding-top: 64px;
+}
+
 .stories-sticky {
   position: fixed;
   /* Place exactly under header (56px) + livebar (32px) = 88px */

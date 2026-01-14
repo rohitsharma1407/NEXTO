@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ProfileStats from "./ProfileStats";
 
-export default function ProfileHeader({ user, posts = 0, onEditProfile, onShareProfile, onCopyProfile, onLogout }) {
+export default function ProfileHeader({ user, posts = 0, isOwner = false, onEditProfile, onShareProfile, onCopyProfile, onLogout }) {
   const [isFollowing, setIsFollowing] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [avatarSize, setAvatarSize] = useState(112);
@@ -17,12 +17,12 @@ export default function ProfileHeader({ user, posts = 0, onEditProfile, onShareP
   }, []);
 
   return (
-    <div className="w-full bg-gray-900 dark:bg-gray-900 text-white rounded-2xl p-4 sm:p-6 shadow-sm">
+    <div className="w-full profile-header-card bg-gray-900 dark:bg-gray-900 text-white rounded-2xl p-4 sm:p-6 shadow-sm">
       
 
       {/* Profile Content */}
       <div className="mt-2 sm:mt-4">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 profile-header-row">
           {/* Left: Avatar */}
           <div className="flex-shrink-0">
             <div className="relative">
@@ -56,50 +56,106 @@ export default function ProfileHeader({ user, posts = 0, onEditProfile, onShareP
           </div>
 
           {/* Center: Stats */}
-          <div className="flex-1 flex flex-col items-center md:items-center">
-            <div className="hidden md:block">
+          <div className="flex-1 flex flex-col items-center md:items-center profile-stats-col">
+            <div className="hidden md:block profile-stats-inline">
               <ProfileStats posts={posts} followers={user?.followers || 0} following={user?.following || 0} onFollowersClick={() => {}} />
             </div>
             {/* Username + handle on its own row */}
-            <div className="mt-3 md:mt-4 text-center md:text-left">
-              <h2 className="text-xl font-semibold text-white">{user?.fullName || user?.username || "User Name"}</h2>
+            <div className="mt-3 md:mt-4 text-center md:text-left profile-name">
+              <h2 className="text-xl md:text-2xl font-semibold text-white">{user?.fullName || user?.username || "User Name"}</h2>
               <div className="flex items-center justify-center md:justify-center gap-3 text-sm text-gray-300 mt-1">
                 <span className="opacity-90">@{user?.username}</span>
-                {user?.isVerified && <span className="bg-blue-600 text-white rounded-full px-2 py-0.5 text-xs">verified</span>}
+                {user?.isVerified && <span className="verified-badge inline-flex items-center gap-1 px-2 py-0.5 text-xs"><i className="fa-solid fa-check text-white text-[10px]" /></span>}
               </div>
             </div>
           </div>
 
           {/* Right: Actions */}
-          <div className="flex-shrink-0 flex flex-col items-end gap-3 w-full md:w-auto">
+          <div className="flex-shrink-0 flex flex-col items-end gap-3 w-full md:w-auto profile-actions">
             <div className="w-full md:w-auto md:block">
               <div className="hidden md:flex items-center gap-3">
-                <button
-                  onClick={() => setIsFollowing((p) => !p)}
-                  aria-label="Follow"
-                  className={
-                    isFollowing
-                      ? "px-5 py-2 rounded-md bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-white font-semibold shadow-sm hover:bg-gray-300 transition"
-                      : "px-5 py-2 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md hover:brightness-105 transition"
-                  }
-                >
-                  {isFollowing ? "Following" : "Follow"}
-                </button>
+                {isOwner ? (
+                  <>
+                    <button
+                      onClick={() => onEditProfile && onEditProfile()}
+                      aria-label="Edit profile"
+                      className="px-6 py-2 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold shadow-md hover:brightness-105 transition"
+                    >
+                      Edit profile
+                    </button>
 
-                <button
-                  aria-label="Message"
-                  className="px-4 py-2 rounded-md bg-gray-800 text-white font-semibold shadow-sm hover:bg-gray-700 transition"
-                >
-                  Message
-                </button>
+                    <button
+                      aria-label="Message"
+                      className="px-4 py-2 rounded-full bg-gray-800 text-white font-semibold shadow-sm hover:bg-gray-700 transition"
+                    >
+                      Message
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => setIsFollowing((p) => !p)}
+                      aria-label="Follow"
+                      className={
+                        isFollowing
+                          ? "px-5 py-2 rounded-full bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-white font-semibold shadow-sm hover:bg-gray-300 transition"
+                          : "px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md hover:brightness-105 transition"
+                      }
+                    >
+                      {isFollowing ? "Following" : "Follow"}
+                    </button>
 
-                <button
-                  onClick={() => setShowMenu((p) => !p)}
-                  className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:opacity-90 transition"
-                  aria-label="More options small"
-                >
-                  <i className="fa-solid fa-ellipsis"></i>
-                </button>
+                    <button
+                      aria-label="Message"
+                      className="px-4 py-2 rounded-full bg-gray-800 text-white font-semibold shadow-sm hover:bg-gray-700 transition"
+                    >
+                      Message
+                    </button>
+                  </>
+                )}
+
+                <div className="relative">
+                  <button
+                    onClick={() => setShowMenu((p) => !p)}
+                    className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:opacity-90 transition"
+                    aria-label="More options small"
+                  >
+                    <i className="fa-solid fa-ellipsis"></i>
+                  </button>
+
+                  {showMenu && (
+                    <>
+                      <div className="fixed inset-0 z-30" onClick={() => setShowMenu(false)} />
+                      <div className="absolute right-0 mt-2 w-44 rounded-2xl bg-white dark:bg-gray-900 backdrop-blur border border-gray-200 dark:border-gray-800 shadow-lg z-40 p-2">
+                        {isOwner && (
+                          <button
+                            onClick={() => { setShowMenu(false); onEditProfile && onEditProfile(); }}
+                            className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm text-gray-800 dark:text-white/90 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                          >
+                            <i className="fa-solid fa-pen w-5 text-gray-500"></i>
+                            Edit profile
+                          </button>
+                        )}
+
+                        <button
+                          onClick={() => { setShowMenu(false); onShareProfile && onShareProfile(); }}
+                          className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm text-gray-800 dark:text-white/90 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                        >
+                          <i className="fa-solid fa-share-nodes w-5 text-blue-500"></i>
+                          Share profile
+                        </button>
+
+                        <button
+                          onClick={() => { setShowMenu(false); onLogout && onLogout(); }}
+                          className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-sm text-gray-800 dark:text-white/90 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                        >
+                          <i className="fa-solid fa-right-from-bracket w-5 text-red-500"></i>
+                          Logout
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
 
               {/* Mobile actions: full width buttons stacked */}

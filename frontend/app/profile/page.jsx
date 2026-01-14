@@ -34,6 +34,12 @@ function ProfilePage() {
     loadProfileData();
   }, [ready, loggedInUser]);
 
+  // Add a body class while on profile to adjust global layout spacing
+  useEffect(() => {
+    document.body.classList.add("profile-active");
+    return () => document.body.classList.remove("profile-active");
+  }, []);
+
   const loadProfileData = async () => {
     try {
       setLoading(true);
@@ -113,6 +119,7 @@ function ProfilePage() {
         <ProfileHeader
           user={profile}
           posts={posts.length}
+          isOwner={loggedInUser?._id === profile?._id}
           onEditProfile={handleEditProfile}
           onShareProfile={handleShareProfile}
           onCopyProfile={() => {

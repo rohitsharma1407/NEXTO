@@ -3,14 +3,18 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.45rem 0.75rem;
-  border-top: 1px solid rgba(226, 232, 240, 0.6);
-  background: radial-gradient(circle at 20% 0%, rgba(124, 58, 237, 0.08), transparent 32%),
-    radial-gradient(circle at 80% -10%, rgba(14, 165, 233, 0.08), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 250, 251, 0.95));
-  backdrop-filter: blur(16px);
-  box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.08);
+  gap: 0.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 2.2rem 2.2rem 0 0;
+  border-top: 1.5px solid rgba(124, 58, 237, 0.13);
+  border-left: 1.5px solid rgba(124, 58, 237, 0.07);
+  border-right: 1.5px solid rgba(14, 165, 233, 0.07);
+  background: rgba(255,255,255,0.65);
+  background-image:
+    linear-gradient(120deg, rgba(124,58,237,0.08) 0%, rgba(236,72,153,0.08) 100%),
+    linear-gradient(180deg, rgba(255,255,255,0.85) 60%, rgba(249,250,251,0.95) 100%);
+  backdrop-filter: blur(24px) saturate(1.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.13), 0 -8px 30px rgba(124,58,237,0.10);
   position: relative;
   z-index: 30;
 }
@@ -29,30 +33,52 @@
 
 .item {
   position: relative;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
-  padding: 0.35rem 0.5rem;
-  border-radius: 14px;
-  color: #475569;
+  gap: 0.25rem;
+  padding: 0.6rem 0.5rem 0.4rem 0.5rem;
+  border-radius: 1.5rem;
+  color: #3b3663;
   font-weight: 700;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   text-decoration: none;
-  transition: color 160ms ease, transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  transition: color 200ms cubic-bezier(.4,0,.2,1), transform 200ms cubic-bezier(.4,0,.2,1), background 200ms cubic-bezier(.4,0,.2,1), box-shadow 200ms cubic-bezier(.4,0,.2,1);
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid transparent;
+  background: transparent;
+  box-shadow: 0 1px 4px rgba(124,58,237,0.04);
 }
 
 .item:hover {
   color: #7c3aed;
+  background: rgba(124,58,237,0.07);
+  border-color: rgba(124,58,237,0.13);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.10);
 }
 
 .icon {
-  font-size: 0.9rem;
-  width: 1.1rem;
-  height: 1.1rem;
-  display: grid;
-  place-items: center;
+  font-size: 1.1rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(124,58,237,0.13), rgba(236,72,153,0.13));
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.10), 0 1.5px 6px rgba(236,72,153,0.07);
+  border: 1.5px solid rgba(124,58,237,0.10);
+  transition: background 220ms, box-shadow 220ms, color 220ms, border 220ms;
+  color: #7c3aed;
+}
+.item:hover .icon,
+.active .icon {
+  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(124,58,237,0.18), 0 2px 8px rgba(236,72,153,0.13);
+  border: 1.5px solid #a78bfa;
 }
 
 .iconInner {
@@ -69,10 +95,10 @@
 }
 
 .active {
-  color: #7c3aed;
-  transform: translateY(-1px) scale(1.05);
-  background: rgba(124, 58, 237, 0.12);
+  color: #fff;
+  background: linear-gradient(120deg, #a78bfa 0%, #f472b6 100%);
   box-shadow: 0 12px 26px rgba(124, 58, 237, 0.18);
+  border-color: #a78bfa;
 }
 
 :global(.dark) .item {
@@ -92,9 +118,9 @@
 .addButton {
   padding: 0.45rem 0.65rem;
   border-radius: 16px;
-  background: linear-gradient(135deg, #7c3aed, #ec4899);
   color: #ffffff;
   box-shadow: 0 18px 35px rgba(124, 58, 237, 0.35);
+    /* Use same padding and border-radius as .item for perfect alignment */
 }
 
 .addActive {
